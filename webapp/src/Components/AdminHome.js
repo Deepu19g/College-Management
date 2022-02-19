@@ -6,7 +6,7 @@ import commiteeLogo from "../images/commiteeLogo.png";
 import libraryLogo from "../images/libraryLogo.png";
 import projectLogo from "../images/projectLogo.png";
 
-class Home extends Component {
+class AdminHome extends Component {
   render() {
     return (
       <Container>
@@ -24,7 +24,7 @@ class Home extends Component {
             </Link>
           </Col>          
             <Col md={5} className="homegrid" style={{border: "1px solid black"}}>
-              <Link to="/Userlibrary">
+              <Link to="/Adminlibrary">
                 <span className="imageholder">
                   <img style={{ marginTop: "30px" }} src={libraryLogo} alt="" />
                 </span>
@@ -35,15 +35,15 @@ class Home extends Component {
           </Row>
           <Row className="homerow justify-content-md-center">
             <Col md={5} className="homegrid" style={{border: "1px solid black"}}>
-              <Link to="/notification">
+              <Link to="/projects">
                 <span className="imageholder">
                   <img style={{ marginTop: "30px" }} src={projectLogo} alt="" />
                 </span>
-                <p>NOTIFICATION</p>
+                <p>PROJECTS</p>
               </Link>
             </Col>
             <Col md={5} className="homegrid" style={{border: "1px solid black"}}>
-              <Link to="/students">
+              <Link to="/Astudents">
                 <span className="imageholder">
                   <img
                     style={{ marginTop: "30px" }}
@@ -61,4 +61,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default AdminHome;

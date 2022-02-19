@@ -13,7 +13,7 @@ class TopNav extends Component {
       <Navbar bg="dark" variant="dark" style={{maxHeight: "60px"}}>
         <Link to="/">
           <Navbar.Brand href="#home" className="navtitle">
-            <img src={djs} alt="" />
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/Model_Engineering_College_%28logo%29.jpg/220px-Model_Engineering_College_%28logo%29.jpg" alt=""  style={{height:"2.5rem",width:"2.5rem",borderRadius:"100%"}}/>
           </Navbar.Brand>
         </Link>
 
@@ -46,8 +46,8 @@ class TopNav extends Component {
             <Link class="dropdown-item" to="/projects">
               Projects
             </Link>
-            <Link class="dropdown-item" to="/committees">
-              Committees
+            <Link class="dropdown-item" to="/students">
+              Students
             </Link>
           </div>
         </div>

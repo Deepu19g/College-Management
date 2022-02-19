@@ -4,17 +4,14 @@ import { Link } from "react-router-dom";
 import departmentLogo from "../images/department-lg.png";
 import switchOrder from "../images/switch-order-logo.png";
 import vector from "../images/Vector.png";
+import { collection, getDocs } from "firebase/firestore";
+import db from "../FireBase";
 
 function Department() {
-  const [tag, setTag] = useState("dname");
-  const [order, setOrder] = useState("1");
-  const [noOfDepartments, setDepartmentNo] = useState(0);
-  const [noOfFaculties, setFacultyNo] = useState(0);
-  const [noOfStudents, setStudentNo] = useState(0);
-  const [departments, setDepartments] = useState([]);
-  const [searchVal, setSearchVal] = useState("");
-
-  async function getCount() {
+  const [data, setdata] = useState([]);
+  const [depCount,setdepCount] = useState(0)
+  const [teacherCount,setteacherCount] = useState(0)
+  /*async function getCount() {
     try {
       const doc = await fetch("/api/department/count");
       const { noOfDepartments, noOfFaculties, noOfStudents } = await doc.json();
@@ -62,12 +59,28 @@ function Department() {
     e.preventDefault();
     if (order === "1") setOrder("-1");
     else setOrder("1");
-  };
+  };*/
 
   useEffect(() => {
-    getCount();
-    getDepartments();
-  }, [tag, order, noOfDepartments, noOfFaculties, noOfStudents]);
+    const depRef = collection(db, "department");
+    let temp = [];
+    let deptcount=0,teacherno=0;
+    let getdata = async () => {
+      const querySnapshot = await getDocs(depRef);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        temp = [...temp, doc.data()];
+        deptcount=deptcount+1;
+        teacherno=teacherno+doc.data().Teachercount
+        
+      });
+      setdata(temp);
+      setdepCount(deptcount);
+      setteacherCount(teacherno)
+    };
+    getdata();
+  }, []);
+  
   return (
     <>
       <div>
@@ -87,99 +100,23 @@ function Department() {
             </p>
             <p className="page-title">DEPARTMENTS</p>
             <p>
-              No. of departments: <b>{noOfDepartments}</b> <br></br>
-              No. of teachers: <b>{noOfFaculties}</b> <br></br>
-              No. of students: <b>{noOfStudents}</b>
+              No. of departments: <b></b>{depCount}<br></br>
+              No. of teachers: <b></b>{teacherCount}<br></br>
+            
             </p>
           </Col>
           {/* <Col md={1}></Col> */}
-          <Col className="rightside" md={8}>
-            <Row>
-              <Col
-                md={1}
-                onClick={() => {
-                  setTag("dname");
-                }}
-              >
-                Name
-              </Col>
-              <Col
-                md={1}
-                onClick={() => {
-                  setTag("fname");
-                }}
-              >
-                H.O.D
-              </Col>
-              <Col
-                className="mr-auto"
-                md={1}
-                onClick={() => {
-                  setTag("strength");
-                }}
-              >
-                Strength
-              </Col>
-
-              <input
-                className="search"
-                type="text"
-                placeholder="Search"
-                value={searchVal}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                style={{ border: "1px solid black" }}
-              />
-              <buttton onClick={handleOrder}>
-                <img src={switchOrder} alt=""></img>{" "}
-              </buttton>
-            </Row>
-            <hr></hr>
-            {/* MAIN */}
-            <Row className="homerow justify-content-md-center">
-              {departments.length > 0 &&
-                departments.map((el, id) => (
-                  <Col
-                    md={5}
-                    key={id}
-                    className="pagegrid"
-                    style={{ border: "1px solid black" }}
-                  >
-                    <Row>
-                      <Col md={1}>
-                        <span>
-                          <img
-                            style={{ marginTop: "30px" }}
-                            src={vector}
-                            alt=""
-                          />
-                        </span>
-                      </Col>
-                      <Col>
-                        <br></br>
-                        <Link
-                          to={`/department/${el.dname
-                            .replace(" ", "-")
-                            .split("-")
-                            .map(
-                              (word) =>
-                                word.charAt(0).toLowerCase() + word.slice(1)
-                            )
-                            .join("-")}`}
-                        >
-                          <p className="grid-title ">{el.dname}</p>
-                        </Link>
-                        <p className="text-muted float-right mr-4">
-                          {" "}
-                          - {el.fname}
-                        </p>
-                      </Col>
-                    </Row>
-                    <p style={{ position: "absolute", bottom: "0" }}>
-                      Strength: {el.strength}
-                    </p>
+          <Col md={9}>
+            <Row style={{height:"100%"}}>
+              {data.map((itm) => {
+                return (
+                  <Col md={4} style={{background:"white",borderRadius:"25",width:"5rem",height:"15rem",marginLeft:"1rem",marginTop:"1rem"}} className="Deptcards">
+                    <p style={{textAlign:"center",fontSize:"1.4rem"}}>{itm.Name}</p>
+                    <p style={{textAlign:"center"}}>HOD-{itm.HOD}</p>
+                    <p style={{textAlign:"center"}}>Strength-{itm.Teachercount}</p>
                   </Col>
-                ))}
+                );
+              })}
             </Row>
           </Col>
         </Row>

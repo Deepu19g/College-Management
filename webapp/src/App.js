@@ -6,13 +6,17 @@ import TopNav from "./Components/TopNav";
 import Library from "./Components/Library";
 import Project from "./Components/Project";
 import Department from "./Components/Department";
-import Committee from "./Components/Committee";
+import Committee from "./Components/Students";
 import Contact from "./Components/Contact";
 import SingleDepartment from "./Components/SingleDepartment";
 import AddBook from "./Components/AddBook";
 import About from "./Components/About";
-
+import Login from "./Components/Login";
 import { Route, BrowserRouter as Router } from "react-router-dom";
+import AdminHome from "./Components/AdminHome";
+import AdminStudent from "./Components/AdminStudent";
+import UserLib from "./Components/Userlib";
+import StudentNotif from "./Components/StudentNotif";
 
 function App() {
   const renderLibrary = () => <Library />;
@@ -30,11 +34,16 @@ function App() {
     <div className="App">
       <Router>
         <TopNav />
-        <Route exact path="/" component={renderHome} />
-        <Route exact path="/library" component={renderLibrary} />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/home" component={renderHome}></Route>
+        <Route exact path="/Shome" component={AdminHome}></Route>
+        <Route exact path="/Astudents" component={AdminStudent} />
+        <Route exact path="/notification" component={StudentNotif} />
+        <Route exact path="/Adminlibrary" component={renderLibrary} />
+        <Route exact path="/Userlibrary" component={UserLib} />
         <Route exact path="/projects" component={renderProject} />
         <Route exact path="/departments" component={renderDepartment} />
-        <Route exact path="/committees" component={renderCommittee} />
+        <Route exact path="/students" component={renderCommittee} />
         <Route exact path="/contact" component={renderContact} />
         <Route
           exact

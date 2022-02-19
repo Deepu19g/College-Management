@@ -2,3 +2,12 @@ body {
   background-color: #f7f8fc !important;
   overflow-x: hidden;
 }
+
+.Deptcards{
+  border-radius: 15px;
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 400;
+  border: 1px solid  ;
+}

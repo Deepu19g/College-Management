@@ -1,12 +1,16 @@
 import { isInteger } from "lodash";
 import React, { useState, useEffect } from "react";
+import { addDoc, Timestamp, doc ,collection} from "firebase/firestore";
+import db from "../FireBase";
+import { useHistory } from "react-router-dom";
 
 function AddBook(props) {
   const [action, setAction] = useState("ADD");
   const [bname, setBname] = useState("");
   const [author, setAuthor] = useState("");
-  const [edition, setEdition] = useState("");
-
+  const [no, setno] = useState(0);
+  const history=useHistory()
+  // const [date, setdate] = useState(null);
   const handleAuthor = (e) => {
     setAuthor(e.target.value);
   };
@@ -16,24 +20,35 @@ function AddBook(props) {
   };
 
   const handleEdition = (e) => {
-    setEdition(e.target.value);
+    //console.log(typeof e.target.value);
+    setno(parseInt(e.target.value) );
   };
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       const slug = window.location.href.slice(30);
-      var editionNo = parseFloat(edition);
+
       var feedback_div = document.getElementById("feedback");
       feedback_div.innerHTML = "";
-      if (bname === "" || author === "" || editionNo === "") {
+      if (bname === "" || author === "" || no === "") {
         var error =
           "<p class='alert alert-danger'>Please enter the missing values</p>";
       } else {
-        if (isInteger(editionNo)) {
+        console.log(typeof no);
+        if (isInteger(no)) {
           var error = "";
-          const data = { bname: bname, author: author, edition: editionNo };
-          if (slug === "add") {
+
+          
+          
+          const docRef = await addDoc(collection(db, "library"), {
+            name: bname,
+            author: author,
+            no: no,
+          });
+          history.goBack()
+
+          /*if (slug === "add") {
             await fetch("/api/library/add", {
               method: "POST",
               headers: {
@@ -50,10 +65,10 @@ function AddBook(props) {
               body: JSON.stringify(data),
             });
           }
-          window.location.href = "http://localhost:3000/library";
+          window.location.href = "http://localhost:3000/library";*/
         } else {
           var error =
-            "<p class='alert alert-danger' >Enter integer for edition</p>";
+            "<p class='alert alert-danger' >Enter integer for Book stock </p>";
         }
       }
 
@@ -63,23 +78,23 @@ function AddBook(props) {
     }
   };
 
-  async function getBook(bookid) {
+  /*async function getBook(bookid) {
     const doc = await fetch(`/api/library/book/${bookid}`);
     const { bname, author, edition } = await doc.json();
     setBname(bname);
     setAuthor(author);
     setEdition(edition);
-  }
+  }*/
 
   useEffect(() => {
-    const slug = window.location.href.slice(30).toUpperCase();
+    /*const slug = window.location.href.slice(30).toUpperCase();
     setAction(slug);
     if (slug !== "ADD") {
       getBook(slug.slice(7));
-    }
+    }*/
   }, []);
   console.log(action);
-  console.log(bname, author, edition);
+
   return (
     <div style={{ textAlign: "center" }}>
       <br></br>
@@ -121,13 +136,14 @@ function AddBook(props) {
         <br></br>
         <div className="row align-items-end">
           <div className="col-3">
-            <label>Book Edition: </label>
+            <label>Book Stock: </label>
           </div>
           <div className="col-7">
             <input
               className="form-control"
               onChange={handleEdition}
-              value={edition}
+              value={no}
+              type="number"
               style={{ border: "1px solid" }}
             />
           </div>

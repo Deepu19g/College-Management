@@ -5,10 +5,10 @@ import libraryLogo from "../images/library-lg.png";
 import switchOrder from "../images/switch-order-logo.png";
 import book from "../images/book.png";
 import { Link } from "react-router-dom";
-import { collection, onSnapshot, getDocs, getDoc,query,where,deleteDoc,doc, DocumentSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, getDocs, getDoc } from "firebase/firestore";
 import db from "../FireBase";
 
-function Library() {
+function UserLib() {
   const [tag, setTag] = useState("bname");
   const [order, setOrder] = useState("1");
   const [noOfBooks, setBookNo] = useState(0);
@@ -71,24 +71,21 @@ function Library() {
   };
 
   const handleDelete = async (el) => {
-    let book={}
-    const q = query(LRef, where("name", "==", `${el.name}`));
-    getDocs(q).then((itm) => {
-      //console.log(itm.documentId());
-
-      if (itm.size !== 0) {
-        itm.forEach((docs) => {
-          console.log(docs.id)
-          // doc.data() is never undefined for query doc snapshots
-         deleteDoc(doc(db, "library", `${docs.id}`))
-         getB()
-        });
-      } else {
-        
-      }
-    });
+    try {
+      await fetch(
+        `api/library/delete?bname=${el.bname}&edition=${el.edition}`,
+        {
+          method: "POST",
+        }
+      );
+      const updatedBooks = _.remove(books, function (n) {
+        return n.bname === el.bname;
+      });
+      setBooks(updatedBooks);
+    } catch (err) {}
   };
-  let getB=async()=>{
+
+  useEffect(() => {
     let books = [];
     getDocs(LRef).then((itm) => {
       //console.log(itm);
@@ -101,12 +98,6 @@ function Library() {
         //setdata({});
       }
     });
-  }
-
-  useEffect(() => {
-   
-    
-    getB()
   }, []);
 
   console.log(Books);
@@ -125,11 +116,7 @@ function Library() {
           <p className="page-title">LIBRARY</p>
           
           <br></br>
-          <Link to="/library/add">
-            <button className="add-btn" style={{ border: "1px solid" }}>
-              <i class="fa fa-plus mr-3" aria-hidden="true"></i>Add Book
-            </button>
-          </Link>
+          
         </Col>
         {/* <Col md={1}></Col> */}
         <Col className="rightside" md={8}>
@@ -166,14 +153,7 @@ function Library() {
                     </Col>
                     <Col>
                       <br></br>
-                      <p className="float-right">
-                        
-                        <i
-                          class="fa fa-trash"
-                          aria-hidden="true"
-                          onClick={() => handleDelete(el)}
-                        />
-                      </p>
+                      
                       <p className="grid-title ">{el.name}</p>
                       <span style={{ float: "right" }}> - {el.author}</span>
                     </Col>
@@ -190,4 +170,4 @@ function Library() {
   );
 }
 
-export default Library;
+export default UserLib;
