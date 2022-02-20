@@ -143,7 +143,7 @@ function UserLib() {
                   md={3}
                   key={id}
                   className="pagegrid"
-                  style={{ border: "1px solid" }}
+                  style={{ border: "1px solid",position:"relative" }}
                 >
                   <Row>
                     <Col md={1}>

@@ -156,7 +156,7 @@ function Library() {
                   md={3}
                   key={id}
                   className="pagegrid"
-                  style={{ border: "1px solid" }}
+                  style={{ border: "1px solid",position:"relative" }}
                 >
                   <Row>
                     <Col md={1}>
@@ -166,7 +166,7 @@ function Library() {
                     </Col>
                     <Col>
                       <br></br>
-                      <p className="float-right">
+                      <p className="float-right" style={{float:"right"}}>
                         
                         <i
                           class="fa fa-trash"
