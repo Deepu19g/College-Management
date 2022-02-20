@@ -101,7 +101,7 @@ function Department() {
             <p className="page-title">DEPARTMENTS</p>
             <p>
               No. of departments: <b></b>{depCount}<br></br>
-              No. of teachers: <b></b>{teacherCount}<br></br>
+           
             
             </p>
           </Col>
@@ -113,7 +113,7 @@ function Department() {
                   <Col md={4} style={{background:"white",borderRadius:"25",width:"5rem",height:"15rem",marginLeft:"1rem",marginTop:"1rem"}} className="Deptcards">
                     <p style={{textAlign:"center",fontSize:"1.4rem"}}>{itm.Name}</p>
                     <p style={{textAlign:"center"}}>HOD-{itm.HOD}</p>
-                    <p style={{textAlign:"center"}}>Strength-{itm.Teachercount}</p>
+                    <p style={{textAlign:"center"}}>Strength-{itm.Staffcount}</p>
                   </Col>
                 );
               })}

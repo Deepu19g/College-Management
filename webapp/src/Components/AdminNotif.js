@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { collection, onSnapshot, getDocs, getDoc } from "firebase/firestore";
 import db from "../FireBase";
-
-function StudentNotif() {
+import {Row,Col,Button} from "react-bootstrap"
+import BasicModal from "./Modal"
+function AdminNotif() {
   const [notif, setnotif] = useState([]);
+  const [open, setOpen] = React.useState(false);
+ 
   let notifRef = collection(db, "notification");
-  useEffect(() => {
+
+  let load=async()=>{
     let temp = [];
     getDocs(notifRef).then((itm) => {
       //console.log(itm);
@@ -18,12 +22,22 @@ function StudentNotif() {
         //setdata({});
       }
     });
+  }
+  useEffect(() => {
+   
+   
+    load()
   }, []);
   console.log(notif);
   return (
-    <div>
-      <h3>Notification</h3>
-      {notif.map((itm) => {
+      <div>
+    <h3>Notification</h3>
+    <Row style={{alignItems:"center"}}>
+      
+      <Col md={2}><Button style={{width:"8rem",marginLeft:"2rem"}} onClick={()=>setOpen(true)}>Add</Button></Col>
+      <BasicModal open={open} setOpen={setOpen} load={load} ></BasicModal>
+      <Col >
+      {notif.map((itm,index) => {
         return (
           <div
             style={{
@@ -32,6 +46,7 @@ function StudentNotif() {
               width: "20rem",
               marginTop: "2rem",
             }}
+            key={index}
           >
             <p
               style={{
@@ -54,8 +69,10 @@ function StudentNotif() {
           </div>
         );
       })}
+      </Col>
+    </Row>
     </div>
   );
 }
 
-export default StudentNotif;
+export default AdminNotif

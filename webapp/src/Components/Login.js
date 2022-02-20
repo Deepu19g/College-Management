@@ -4,7 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-
+import LandingPic from "../images/LandingPic.png"
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -52,8 +52,8 @@ function Login() {
   };
 
   return (
-    <Row style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
-      <Col md={8}></Col>
+    <Row style={{ display: "flex", justifyContent: "center", height: "100vh",background:"white" }}>
+      <Col md={8}><img src={LandingPic}></img></Col>
       <Col md={3} style={{ marginTop: "6rem" }}>
         <Form
           style={{

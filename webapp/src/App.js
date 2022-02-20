@@ -17,6 +17,7 @@ import AdminHome from "./Components/AdminHome";
 import AdminStudent from "./Components/AdminStudent";
 import UserLib from "./Components/Userlib";
 import StudentNotif from "./Components/StudentNotif";
+import AdminNotif from "./Components/AdminNotif";
 
 function App() {
   const renderLibrary = () => <Library />;
@@ -39,6 +40,8 @@ function App() {
         <Route exact path="/Shome" component={AdminHome}></Route>
         <Route exact path="/Astudents" component={AdminStudent} />
         <Route exact path="/notification" component={StudentNotif} />
+        <Route exact path="/Anotification" component={AdminNotif} />
+      
         <Route exact path="/Adminlibrary" component={renderLibrary} />
         <Route exact path="/Userlibrary" component={UserLib} />
         <Route exact path="/projects" component={renderProject} />

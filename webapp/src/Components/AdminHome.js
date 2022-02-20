@@ -35,11 +35,11 @@ class AdminHome extends Component {
           </Row>
           <Row className="homerow justify-content-md-center">
             <Col md={5} className="homegrid" style={{border: "1px solid black"}}>
-              <Link to="/projects">
+              <Link to="/Anotification">
                 <span className="imageholder">
                   <img style={{ marginTop: "30px" }} src={projectLogo} alt="" />
                 </span>
-                <p>PROJECTS</p>
+                <p>NOTIFICATION</p>
               </Link>
             </Col>
             <Col md={5} className="homegrid" style={{border: "1px solid black"}}>
